@@ -1,6 +1,6 @@
 # Palladion
 
-**Live demo** · [Operations desk](https://deep-shoal.boxd.sh/?key=f55c2e7dd12d9c4a) · [Public page: send a message from your phone](https://deep-shoal.boxd.sh/send)
+**[▶ Demo video](https://youtu.be/ARaYXjiwRSs)** · **Live demo:** [Operations desk](https://deep-shoal.boxd.sh/?key=f55c2e7dd12d9c4a) · [Public page: send a message from your phone](https://deep-shoal.boxd.sh/send)
 
 An operations desk for wildfire evacuation and rescue, run by AI agents and decided by people. It replays the
 fire at Mati, Greece (23 July 2018) minute by minute: citizen messages arrive, agents read them, code checks
