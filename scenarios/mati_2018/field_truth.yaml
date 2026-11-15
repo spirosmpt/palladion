@@ -1,0 +1,19 @@
+# Hidden crew reports for the crew simulator (demo and evaluation ONLY).
+# When a land unit sent to one of these cases reaches its estimated end of time on scene, the simulator
+# sends this report as its crew, marked as simulated. The words are what the crew found, not what the
+# triage expected, so they may disagree with it. A case with no record gets no outcome report: an operator
+# types what the crew said. The agents and the triage never read this file.
+m02:
+  report: "Πήραμε 2 άτομα, ο πατέρας με άσθμα σε οξυγόνο."
+m04:
+  report: "Απεγκλωβίσαμε τρεις, η μητέρα με φορείο. Βγήκαν όλοι."
+m05:
+  report: "Οι ηλικιωμένοι στην Αφροδίτης είχαν φύγει ήδη με γείτονα, μας το είπε ο διπλανός."
+m14:
+  report: "Πήραμε 1 άτομο, την έγκυο, είναι καλά."
+m17:
+  report: "Δεν βρήκαμε κανέναν στην Ίλιδος. Το σπίτι κλειδωμένο, οι γείτονες δεν ξέρουν."
+m27:
+  report: "Πήραμε 1 άτομο, τον κατάκοιτο. Μένει ακόμα 1, η γυναίκα του δεν θέλει να φύγει χωρίς τον σκύλο."
+m31:
+  report: "Πήραμε 1 τραυματία με εγκαύματα. Αναζωπύρωση στη Ναρκίσσου, πεσμένα καλώδια στον δρόμο."

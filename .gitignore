@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Downloaded data, model answers and runtime state (all recreated locally)
+data/processed/*
+!data/processed/.gitkeep
+data/raw/
+data/llm_cache/
+runtime/
+start.sh
+uvicorn.log
+
+# Secrets and private evaluation data
+.env
+eval/sealed/mati_2018_sealed.yaml

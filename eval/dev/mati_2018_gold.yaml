@@ -1,0 +1,129 @@
+# Expected answers for scenarios/mati_2018/messages.yaml (development set).
+# Never read by the pipeline or the agents; only by the evaluation scripts.
+#
+# location: the place the people are, with a tolerance. Street points are the middle of that street's
+#   stretch in the named area (OSM). tol_m is generous for areas and long streets.
+# decision: every acceptable decision; the first is preferred.
+# vulnerable: elderly, child, mobility, bedridden, pregnant, respiratory, burns, no_vehicle, animals
+# situation: home, vehicle, road, beach, sea, building, unknown
+# flags: injection, rumor, contradicts_model, ambiguous_street, update
+
+m01: { location: { street: "Ρήγα Φεραίου", area: "Νέος Βουτζάς", lon: 23.97338, lat: 38.04831, tol_m: 1200 },
+       people: null, vulnerable: [], situation: unknown, reporter: self,
+       # also shelter / unit: front 7', no road route reaches a refuge with the 10' margin
+       decision: [EVACUATE_ROUTE_CANDIDATE, SHELTER_CANDIDATE, DISPATCH_UNIT_CANDIDATE] }
+m02: { location: { street: "Χρυσοστόμου Σμύρνης", area: "Νέος Βουτζάς", lon: 23.97962, lat: 38.04069, tol_m: 2000 },
+       people: 2, vulnerable: [respiratory], situation: home, reporter: self,
+       decision: [DISPATCH_UNIT_CANDIDATE, EVACUATE_ROUTE_CANDIDATE] }
+m03: { location: { street: "Κολοκοτρώνη", area: "Νέος Βουτζάς", lon: 23.98354, lat: 38.05033, tol_m: 800 },
+       people: null, vulnerable: [], situation: home, reporter: self,
+       decision: [EVACUATE_ROUTE_CANDIDATE], flags: [ambiguous_street] }
+m04: { location: { street: "Ταϋγέτου", area: "Νέος Βουτζάς", lon: 23.98024, lat: 38.05151, tol_m: 600 },
+       people: 3, vulnerable: [mobility], situation: home, reporter: self,
+       decision: [DISPATCH_UNIT_CANDIDATE, EVACUATE_ROUTE_CANDIDATE], flags: [ambiguous_street] }
+m05: { location: { street: "Αφροδίτης", area: "Νέος Βουτζάς", lon: 23.98143, lat: 38.04960, tol_m: 500 },
+       people: 2, vulnerable: [elderly, no_vehicle], situation: home, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE], flags: [ambiguous_street] }
+m06: { location: { street: "Κυανής Ακτής", area: "Μάτι", lon: 23.98886, lat: 38.04517, tol_m: 900 },
+       people: 3, vulnerable: [child], situation: home, reporter: self,
+       decision: [EVACUATE_ROUTE_CANDIDATE] }
+m07: { location: { street: "Εσπερίδων", area: "Νέος Βουτζάς", lon: 23.98236, lat: 38.05110, tol_m: 600 },
+       people: null, vulnerable: [], situation: home, reporter: self,
+       decision: [DISPATCH_UNIT_CANDIDATE, EVACUATE_ROUTE_CANDIDATE, CALLBACK], flags: [ambiguous_street] }
+m08: { location: { street: "Κυκλαμίνων", area: "Νέος Βουτζάς", lon: 23.98137, lat: 38.05116, tol_m: 800 },
+       people: null, vulnerable: [], situation: unknown, reporter: self,
+       decision: [REPORTED_SAFE] }
+m09: { location: { street: null, area: "Κόκκινο Λιμανάκι", lon: 24.00015, lat: 38.03332, tol_m: 1200 },
+       people: 1, vulnerable: [], situation: home, reporter: third_party,
+       decision: [CALLBACK, MISSING_PERSON] }
+m10: { location: null, people: null, vulnerable: [], situation: unknown, reporter: self,
+       decision: [INFO, OUT_OF_AREA] }
+m11: { location: { street: null, area: "Μάτι", lon: 24.0000, lat: 38.0440, tol_m: 1500 },
+       people: 6, vulnerable: [], situation: building, reporter: self,
+       decision: [CALLBACK, EVACUATE_ROUTE_CANDIDATE, SEA_RESCUE_CANDIDATE] }
+m12: { location: { street: "Ρούμελης", area: "Νέα Μάκρη", lon: 23.96712, lat: 38.08259, tol_m: 1000 },
+       people: null, vulnerable: [], situation: home, reporter: self,
+       decision: [MONITOR], flags: [ambiguous_street] }
+m13: { location: { street: "Μαραθώνος", area: "Μάτι", lon: 23.98915, lat: 38.04357, tol_m: 1500 },
+       people: 1, vulnerable: [], situation: vehicle, reporter: self,
+       decision: [EVACUATE_ROUTE_CANDIDATE, SHELTER_CANDIDATE] }
+m14: { location: { street: "Κυκλάδων", area: "Μάτι", lon: 23.99660, lat: 38.04400, tol_m: 600 },
+       people: 1, vulnerable: [pregnant, no_vehicle], situation: home, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE], flags: [ambiguous_street] }
+m15: { location: { street: "Ζακύνθου", area: "Μάτι", lon: 23.98534, lat: 38.05074, tol_m: 700 },
+       people: 5, vulnerable: [], situation: home, reporter: self,
+       # also shelter / unit: front 7', no road route reaches a refuge with the 10' margin
+       decision: [EVACUATE_ROUTE_CANDIDATE, SHELTER_CANDIDATE, DISPATCH_UNIT_CANDIDATE], flags: [ambiguous_street] }
+m16: { location: { street: "Μεσσηνίας", area: "Μάτι", lon: 23.98271, lat: 38.05376, tol_m: 700 },
+       people: 2, vulnerable: [animals], situation: road, reporter: self,
+       decision: [EVACUATE_ROUTE_CANDIDATE], flags: [ambiguous_street] }
+m17: { location: { street: "Ίλιδος", area: "Κόκκινο Λιμανάκι", lon: 23.99639, lat: 38.02912, tol_m: 700 },
+       people: 1, vulnerable: [], situation: home, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE, CALLBACK], duplicate_of: m09, flags: [update] }
+m18: { location: { street: null, area: "Μάτι", lon: 23.9925, lat: 38.0470, tol_m: 2000 },
+       people: null, vulnerable: [child], situation: unknown, reporter: self,
+       decision: [CALLBACK] }
+m19: { location: { street: null, area: "Μάτι", lon: 24.0000, lat: 38.0440, tol_m: 1500 },
+       people: null, vulnerable: [], situation: beach, reporter: third_party,
+       decision: [SEA_RESCUE_CANDIDATE] }
+m20: { location: { street: null, area: "Μάτι", lon: 24.0000, lat: 38.0440, tol_m: 1500 },
+       people: 40, vulnerable: [], situation: beach, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE] }
+m21: { location: { street: "Ποσειδώνος", area: "Μάτι", lon: 23.99892, lat: 38.04464, tol_m: 1200 },
+       people: 30, vulnerable: [], situation: sea, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE], flags: [ambiguous_street] }
+m22: { location: { street: "Αιγαίου", area: "Μάτι", lon: 23.98768, lat: 38.05468, tol_m: 600 },
+       people: 4, vulnerable: [], situation: sheltering, reporter: self,
+       decision: [DISPATCH_UNIT_CANDIDATE, SHELTER_CANDIDATE], flags: [ambiguous_street] }
+m23: { location: null,
+       people: null, vulnerable: [], situation: unknown, reporter: third_party,
+       decision: [REVIEW_REQUIRED, INFO], flags: [rumor] }
+m24: { location: { street: null, area: "Μάτι", lon: 24.0000, lat: 38.0440, tol_m: 1500 },
+       people: null, vulnerable: [], situation: sea, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE, REPORTED_SAFE], duplicate_of: m06, flags: [update] }
+m25: { location: null, people: null, vulnerable: [], situation: unknown, reporter: self,
+       decision: [REVIEW_REQUIRED], flags: [injection] }
+m26: { location: { street: "Μαραθώνος", area: "Μάτι", lon: 23.98915, lat: 38.04357, tol_m: 1200 },
+       people: null, vulnerable: [], situation: road, reporter: self,
+       decision: [INFO] }
+m27: { location: { street: "Φυσιολατρών", area: "Μάτι", lon: 23.99399, lat: 38.03887, tol_m: 500 },
+       people: 2, vulnerable: [bedridden], situation: home, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE] }
+m28: { location: { street: null, area: "Κόκκινο Λιμανάκι", lon: 24.00015, lat: 38.03332, tol_m: 1000 },
+       people: 15, vulnerable: [elderly], situation: sea, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE] }
+m29: { location: { street: "Τρίτωνος", area: "Μάτι", lon: 23.99333, lat: 38.04216, tol_m: 800 },
+       people: null, vulnerable: [], situation: road, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE, EVACUATE_ROUTE_CANDIDATE], flags: [ambiguous_street, contradicts_model] }
+m30: { location: { street: null, area: "Μάτι", lon: 23.9925, lat: 38.0470, tol_m: 2000 },
+       people: null, vulnerable: [], situation: unknown, reporter: third_party,
+       decision: [INFO] }
+m31: { location: { street: "Ναρκίσσου", area: "Νέος Βουτζάς", lon: 23.98404, lat: 38.03212, tol_m: 800 },
+       people: 1, vulnerable: [burns], situation: vehicle, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE], flags: [ambiguous_street] }
+m32: { location: { street: null, area: "Μάτι", lon: 24.0000, lat: 38.0440, tol_m: 1500 },
+       people: 1, vulnerable: [child], situation: beach, reporter: third_party,
+       decision: [MISSING_PERSON] }
+m33: { location: { street: "Ροδοδάφνης", area: "Νέος Βουτζάς", lon: 23.98539, lat: 38.02426, tol_m: 700 },
+       people: null, vulnerable: [], situation: home, reporter: self,
+       decision: [EVACUATE_ROUTE_CANDIDATE], flags: [ambiguous_street] }
+m34: { location: { street: null, area: "Ραφήνα", lon: 24.0113, lat: 38.0210, tol_m: 800 },
+       people: null, vulnerable: [], situation: building, reporter: self,
+       decision: [MONITOR, INFO] }
+m35: { location: { street: "Κύπρου", area: "Μάτι", lon: 23.99367, lat: 38.04468, tol_m: 800 },
+       people: 1, vulnerable: [], situation: home, reporter: third_party,
+       decision: [DISPATCH_UNIT_CANDIDATE], flags: [ambiguous_street, contradicts_model] }
+m36: { location: { street: "Ποσειδώνος", area: "Μάτι", lon: 23.99892, lat: 38.04464, tol_m: 1200 },
+       people: null, vulnerable: [child], situation: sea, reporter: self,
+       decision: [SEA_RESCUE_CANDIDATE], duplicate_of: m21, flags: [update, ambiguous_street] }
+m37: { location: { street: null, area: "Ραφήνα", lon: 24.0113, lat: 38.0210, tol_m: 1000 },
+       people: null, vulnerable: [], situation: unknown, reporter: third_party,
+       decision: [INFO] }
+m38: { location: { street: "Δάσους", area: "Αγία Μαρίνα", lon: 23.97431, lat: 38.05994, tol_m: 1000 },
+       people: null, vulnerable: [], situation: home, reporter: self,
+       decision: [MONITOR], flags: [ambiguous_street] }
+m39: { location: { street: "Ίλιδος", area: null, lon: 23.99639, lat: 38.02912, tol_m: 800 },
+       people: 4, vulnerable: [], situation: beach, reporter: self,
+       decision: [REPORTED_SAFE] }
+m40: { location: null, people: null, vulnerable: [], situation: unknown, reporter: self,
+       decision: [REVIEW_REQUIRED], flags: [injection] }

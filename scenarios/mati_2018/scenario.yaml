@@ -1,0 +1,212 @@
+# Scenario: the East Attica (Mati) fire, 23 July 2018.
+#
+# Every time and place below carries a confidence level and its sources:
+#   documented  = stated in a cited source
+#   derived     = computed from documented values (the note says how)
+#   approximate = placed by us; check against data before trusting it
+# The fire front between anchors is a reconstruction, not a physical fire model.
+
+id: mati_2018
+name:
+  el: "Μάτι, 23 Ιουλίου 2018"
+  en: "Mati, 23 July 2018"
+summary:
+  el: >-
+    Πυρκαγιά στις ανατολικές πλαγιές της Πεντέλης, με ισχυρούς δυτικοβορειοδυτικούς ανέμους.
+    Έφτασε στη θάλασσα σε λιγότερο από δύο ώρες, περνώντας από Νέο Βουτζά, Μάτι και Κόκκινο Λιμανάκι.
+  en: >-
+    Wildfire on the eastern slopes of Mt Penteli driven by strong WNW winds. It reached the sea in
+    under two hours through Neos Voutzas, Mati and Kokkino Limanaki.
+timezone: Europe/Athens
+start: "2018-07-23T16:30:00+03:00"
+end: "2018-07-23T20:30:00+03:00"
+default_speed: 60
+center: [23.965, 38.050]
+bbox: [23.880, 37.990, 24.060, 38.110]
+# Smaller area for building footprints: the burned zone plus a margin (Rafina, Nea Makri edges).
+detail_bbox: [23.910, 38.015, 24.030, 38.085]
+
+fire:
+  model: anchored_ellipse
+  spread_bearing_deg: 90      # derived: ERA5 wind at the ignition from 264-280 deg, 16:00-18:00 (S6),
+                              # and the axis from the perimeter's west tip to the Mati coast (S4)
+  length_to_breadth: 1.5      # derived: the front covers 85% of the Copernicus perimeter by 18:35
+  safety_margin_min: 10
+  # Inside the Copernicus perimeter, ground the ellipse does not reach by the last anchor is assumed
+  # to burn progressively over this many minutes (flanks spreading along the coast). Assumption:
+  # no sourced times yet for these areas.
+  post_head_spread_min: 55
+  note: >-
+    Elliptical front with the ignition at its rear focus. Its head distance is fitted piecewise
+    through the anchors, so the front passes each anchor at the anchor's time. Replace the land mask
+    with the Copernicus EMS / EFFIS burned perimeter when available (data_pipeline/README.md).
+  ignition:
+    id: ignition
+    label: { el: "Έναρξη, Νταού Πεντέλης", en: "Ignition, Daou Pentelis" }
+    lon: 23.94719
+    lat: 38.04357
+    time: "2018-07-23T16:41:00+03:00"
+    confidence: derived
+    source_ids: [S1, S2, S4]
+    note: >-
+      Time documented (S1; CCTV in S2). Position: 120 m inside the western tip of the Copernicus
+      burned-area perimeter (S4), 4.8 km west of the coast (S1 gives 5.2 km).
+  anchors:
+    - id: marathonos
+      label: { el: "Λεωφόρος Μαραθώνος", en: "Marathonos Avenue" }
+      lon: 23.98915
+      lat: 38.04357
+      time: "2018-07-23T18:18:00+03:00"
+      confidence: derived
+      source_ids: [S1]
+      note: >-
+        Time documented as approximate in S1. Point: where Marathonos Avenue (OSM) crosses the
+        line from the ignition to the Mati coast.
+    - id: coast_mati
+      label: { el: "Ακτή Ματιού", en: "Mati coast" }
+      lon: 24.00094
+      lat: 38.04311
+      time: "2018-07-23T18:35:00+03:00"
+      confidence: derived
+      source_ids: [S1, S4]
+      note: >-
+        S1: the fire reached the sea 'in a little less than two hours' after 16:41; we use 18:35.
+        Point: the burned area's edge at the coast on the ignition axis (S4), 90 m from the sea.
+
+wind:
+  - time_from: "2018-07-23T16:41:00+03:00"
+    time_to: "2018-07-23T18:41:00+03:00"
+    station: "Penteli"
+    from_bearing_deg: 292.5
+    speed_kmh_min: 32
+    speed_kmh_max: 56
+    gust_kmh_max: 89
+    source_ids: [S1]
+  - time_from: "2018-07-23T16:00:00+03:00"
+    time_to: "2018-07-23T18:00:00+03:00"
+    station: "ERA5 (ignition)"
+    from_bearing_deg: 270
+    speed_kmh_min: 18
+    speed_kmh_max: 29
+    gust_kmh_max: 90
+    source_ids: [S6]
+  - time_from: "2018-07-23T16:41:00+03:00"
+    time_to: "2018-07-23T18:41:00+03:00"
+    station: "Rafina"
+    from_bearing_deg: 292.5
+    speed_kmh_min: 32
+    speed_kmh_max: 56
+    gust_kmh_max: 120
+    source_ids: [S1]
+
+# Rough coastline used only until `python -m palladion.datasets.fetch` has produced data/processed/land.geojson.
+fallback_coastline:
+  - [23.985, 38.110]
+  - [23.988, 38.090]
+  - [23.995, 38.075]
+  - [24.002, 38.060]
+  - [24.007, 38.048]
+  - [24.010, 38.035]
+  - [24.012, 38.022]
+  - [24.018, 38.010]
+  - [24.020, 37.990]
+
+fallback_zones:
+  - id: rafina_port
+    name: "Λιμάνι Ραφήνας"
+    kind: port
+    lon: 24.0113
+    lat: 38.0210
+    confidence: approximate
+    note: "Position approximate until OSM data is loaded."
+
+# Local area names that OSM has only as a beach or not at all.
+# Names people use in 112 warnings, where OSM names a settlement after an institution (OSM name: public name).
+area_display_names:
+  "ΚΑΑΥ Αγίου Ανδρέα": "Άγιος Ανδρέας"     # the holiday camp; the area is known as Άγιος Ανδρέας
+
+extra_areas:
+  "Κόκκινο Λιμανάκι": [24.00015, 38.03332]
+
+# Well-known places outside the scenario area (approximate centres): a message from there is out of area.
+outside_areas:
+  "Αθήνα": [23.7275, 37.9838]
+  "Athens": [23.7275, 37.9838]
+  "Παγκράτι": [23.7470, 37.9680]
+  "Πειραιάς": [23.6470, 37.9420]
+  # Not "Μαραθώνας": it is one letter from "Λεωφόρος Μαραθώνος", the main road through Mati.
+  "Θεσσαλονίκη": [22.9444, 40.6401]
+  "Κινέτα": [23.2050, 37.9700]       # the other fire of 23/7/2018, west of Athens
+
+# Copernicus EMS rapid mapping, activation EMSR300, area of interest 02 "Rafina".
+copernicus:
+  activation: EMSR300
+  delineation_zip: "https://cems-mapping-website.s3.eu-west-1.amazonaws.com/static/activations/EMSR300/EMSR300_02RAFINA_01DELINEATION_MAP_v2_vector.zip"
+  grading_zip: "https://cems-mapping-website.s3.eu-west-1.amazonaws.com/static/activations/EMSR300/EMSR300_02RAFINA_02GRADING_MAP_v2_vector.zip"
+  source_id: S4
+
+sources:
+  - id: S1
+    title: "Xanthopoulos & Mitsopoulos, The catastrophic fire of July 2018 in Greece (FIRElinks)"
+    url: "https://firelinks.eu/wp-content/uploads/2019/11/Xanthopoulos-Mitsopoulos-The-catastrophic-fire-of-July-2018-in-Greece-for-Firelinks-site.pdf"
+  - id: S2
+    title: "2018 Attica wildfires (Wikipedia)"
+    url: "https://en.wikipedia.org/wiki/2018_Attica_wildfires"
+  - id: S3
+    title: "Mati, Greece (Wikipedia)"
+    url: "https://en.wikipedia.org/wiki/Mati,_Greece"
+  - id: S4
+    title: "Copernicus EMS EMSR300, AOI02 Rafina: delineation (1,275.9 ha) and grading maps"
+    url: "https://mapping.emergency.copernicus.eu/activations/EMSR300"
+  - id: S6
+    title: "Open-Meteo historical weather API, ERA5 reanalysis, 23 July 2018 (hourly wind at the ignition)"
+    url: "https://open-meteo.com/en/docs/historical-weather-api"
+  - id: S5
+    title: "Building inspections, 26 July 2018: 2,489 inspected, 1,218 uninhabitable (aftodioikisi.gr)"
+    url: "https://www.aftodioikisi.gr/ipourgeia/mi-katikisima-1-218-spitia-stis-pligises-apo-tis-pyrkagies-perioches/"
+
+# Land units the desk can send to a case. Illustrative, NOT the 2018 deployment: on the afternoon of
+# 23/7/2018 most Attica units were committed to the Kineta fire, and the record of who was where is not
+# public in detail. Bases are real stations, positions approximate; counts are assumptions.
+ground_units:
+  note:
+    el: >-
+      Οι μονάδες ξηράς είναι ενδεικτικές, όχι η διάταξη της 23/7/2018: οι περισσότερες μονάδες της Αττικής
+      ήταν στην Κινέτα. Οι βάσεις είναι πραγματικοί σταθμοί σε κατά προσέγγιση θέσεις· οι αριθμοί είναι υποθέσεις.
+    en: >-
+      Land units are illustrative, not the deployment of 23/7/2018: most Attica units were at the Kineta fire.
+      Bases are real stations at approximate positions; the numbers are assumptions.
+  groups:
+    - id: fire_rafina
+      prefix: ΠΥ-Ρ
+      name: { el: "Πυροσβεστικός Σταθμός Ραφήνας", en: "Rafina fire station" }
+      kind: fire_engine
+      base: { name: "Ραφήνα", lon: 23.9990, lat: 38.0230 }        # approximate
+      count: 3                     # assumption
+      ready_min: 2                 # assumption
+      on_scene_min: 20             # assumption
+    - id: fire_nea_makri
+      prefix: ΠΥ-Μ
+      name: { el: "Πυροσβεστικό κλιμάκιο Νέας Μάκρης", en: "Nea Makri fire post" }
+      kind: fire_engine
+      base: { name: "Νέα Μάκρη", lon: 23.9790, lat: 38.0860 }       # approximate
+      count: 2                     # assumption
+      ready_min: 2
+      on_scene_min: 20
+    - id: ekab
+      prefix: ΕΚΑΒ
+      name: { el: "ΕΚΑΒ (Κέντρο Υγείας Νέας Μάκρης)", en: "EKAB (Nea Makri health centre)" }
+      kind: ambulance
+      base: { name: "Νέα Μάκρη", lon: 23.9770, lat: 38.0830 }       # approximate
+      count: 3                     # assumption
+      ready_min: 3
+      on_scene_min: 15
+
+disclaimer:
+  el: >-
+    Ανασύνθεση για εκπαίδευση και έρευνα. Το μέτωπο είναι εκτίμηση από λίγα σημεία με πηγές και
+    όχι φυσικό μοντέλο φωτιάς. Μονάδες και μηνύματα είναι προσομοιωμένα. Δεν προορίζεται για
+    επιχειρησιακή χρήση.
+  en: >-
+    Reconstruction for education and research. The front is estimated from a few sourced points and
+    is not a physical fire model. Units and messages are simulated. Not for operational use.

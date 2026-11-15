@@ -1,0 +1,14 @@
+# Hidden replies for the callback simulator (demo and evaluation ONLY).
+# When the desk calls a synthetic sender back, the simulator answers from here, after `delay_min`
+# minutes of scenario time. Replies come from this record, never from the wording of the questions,
+# and every reply is shown as [ΠΡΟΣΟΜΟΙΩΣΗ]. Real messages never have a record, so they never get one.
+# The agents never read this file.
+m07:
+  delay_min: 3
+  reply: "Εσπερίδων στον Νέο Βουτζά, πάνω από τη Μαραθώνος. Είμαστε 3, ένα παιδί. Έχουμε αυτοκίνητο αλλά ο δρόμος τελειώνει στο δάσος."
+m11:
+  delay_min: 4
+  reply: "Hotel on Ποσειδώνος street, Mati, 200 m from the beach. 6 adults, we can all walk. No car."
+m18:
+  delay_min: 5
+  reply: "Μάτι, οδός Κυανής Ακτής… είμαι με τα δύο παιδιά μου… ο καπνός μπαίνει στο σπίτι… δεν έχω αυτοκίνητο"
